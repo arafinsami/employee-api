@@ -76,6 +76,10 @@ public class EmployeeService {
 		return repository.findByEmail(email);
 	}
 	
+	public EmployeeView findViewByName(String name) {
+		return repository.findViewByName(name);
+	}
+	
 	//findOneById && getOne()
 	
 	/*public List<EmployeeDto> findAll() {

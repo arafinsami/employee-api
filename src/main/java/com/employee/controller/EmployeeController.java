@@ -25,6 +25,7 @@ import com.employee.dto.EmployeeDto;
 import com.employee.entity.Employee;
 import com.employee.exception.NotFoundException;
 import com.employee.service.EmployeeService;
+import com.employee.service.EmployeeView;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -86,5 +87,13 @@ public class EmployeeController {
 
 		List<EmployeeDto> dtos = service.findByEmail(email).stream().map(EmployeeDto::from).collect(Collectors.toList());
 		return ok(success(dtos).getJson());
+	}
+	
+	@GetMapping("/employee/{name}")
+	@ApiOperation(value = "get employee by name", response = EmployeeDto.class)
+	public ResponseEntity<JSONObject> findViewByName(@PathVariable String name) {
+
+		EmployeeView view = service.findViewByName(name);
+		return ok(success(view).getJson());
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.employee.dto.EmployeeDto;
 import com.employee.entity.Employee;
+import com.employee.service.EmployeeView;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
@@ -23,4 +24,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<EmployeeDto> getAll();
 	
 	List<Employee> findByEmail(String email);
+	
+	EmployeeView findViewByName(String name);
  }
