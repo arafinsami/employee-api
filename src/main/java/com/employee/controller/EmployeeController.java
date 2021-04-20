@@ -1,11 +1,21 @@
 package com.employee.controller;
 
+import static com.employee.exception.ApiError.fieldError;
+import static com.employee.response.ResponseBuilder.error;
 import static com.employee.response.ResponseBuilder.success;
+import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +40,11 @@ public class EmployeeController {
 
 	@PostMapping("/save")
 	@ApiOperation(value = "save employee", response = EmployeeDto.class)
-	public ResponseEntity<JSONObject> save(@RequestBody EmployeeDto dto) {
+	public ResponseEntity<JSONObject> save(@Valid @RequestBody EmployeeDto dto, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			return badRequest().body(error(fieldError(bindingResult)).getJson());
+		}
 
 		Employee employee = dto.to();
 
@@ -56,5 +70,21 @@ public class EmployeeController {
 		Employee employee = service.findById(id).orElseThrow(NotFoundException::new);
 		service.delete(employee);
 		return ok(success("employee deleted with id : " + employee.getId()).getJson());
+	}
+
+	@GetMapping("/employees")
+	@ApiOperation(value = "get all employee", response = EmployeeDto.class)
+	public ResponseEntity<JSONObject> findAll() {
+
+		List<EmployeeDto> dtos = service.findAll();
+		return ok(success(dtos).getJson());
+	}
+	
+	@GetMapping("/employees/{email}")
+	@ApiOperation(value = "get all employee by email", response = EmployeeDto.class)
+	public ResponseEntity<JSONObject> findByEmail(@PathVariable String email) {
+
+		List<EmployeeDto> dtos = service.findByEmail(email).stream().map(EmployeeDto::from).collect(Collectors.toList());
+		return ok(success(dtos).getJson());
 	}
 }

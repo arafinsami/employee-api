@@ -1,20 +1,27 @@
 package com.employee.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 import com.employee.entity.Employee;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class EmployeeDto {
 
 	private Long id;
 
+	@Email
 	private String email;
 
+	@NotBlank
 	private String name;
 
 	public Employee to() {
-		
+
 		Employee employee = new Employee();
 		employee.setName(name);
 		employee.setEmail(email);
@@ -22,7 +29,7 @@ public class EmployeeDto {
 	}
 
 	public void update(Employee employee) {
-		
+
 		employee.setName(name);
 		employee.setEmail(email);
 	}
@@ -34,5 +41,9 @@ public class EmployeeDto {
 		dto.setEmail(employee.getEmail());
 		dto.setName(employee.getName());
 		return dto;
+	}
+
+	public EmployeeDto(String email) {
+		this.email = email;
 	}
 }
