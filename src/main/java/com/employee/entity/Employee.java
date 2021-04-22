@@ -41,7 +41,10 @@ public class Employee implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	private Department department;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "employee",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
 	List<Address> addresses;
 }
 

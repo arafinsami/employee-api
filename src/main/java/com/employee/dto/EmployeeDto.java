@@ -15,6 +15,7 @@ public class EmployeeDto {
 	private Long id;
 
 	@Email
+	@NotBlank
 	private String email;
 
 	@NotBlank

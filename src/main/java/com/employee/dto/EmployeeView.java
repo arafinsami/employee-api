@@ -1,8 +1,8 @@
-package com.employee.service;
+package com.employee.dto;
 
 public interface EmployeeView {
 
 	String getName();
-	
+
 	String getEmail();
 }
