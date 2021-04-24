@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -26,9 +25,5 @@ public class Address implements Serializable {
 	private Long id;
 
 	private String name;
-	
-	@ManyToOne
-	private Employee employee;
+
 }
-
-

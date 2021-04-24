@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import org.json.simple.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.dto.EmployeeDto;
+import com.employee.dto.EmployeeResponse;
 import com.employee.dto.EmployeeView;
+import com.employee.entity.Department;
 import com.employee.entity.Employee;
 import com.employee.exception.NotFoundException;
 import com.employee.helper.CommonDataHelper;
+import com.employee.service.DepartmentService;
 import com.employee.service.EmployeeService;
 import com.employee.validator.EmployeeValidator;
 
@@ -49,11 +51,13 @@ public class EmployeeController {
 
 	private final EmployeeValidator validator;
 
+	private final DepartmentService departmentService;
+
 	@PostMapping("/save")
 	@ApiOperation(value = "save employee", response = EmployeeDto.class)
 	public ResponseEntity<JSONObject> save(@Valid @RequestBody EmployeeDto dto, BindingResult bindingResult) {
 
-		ValidationUtils.invokeValidator(validator, dto, bindingResult);
+		// ValidationUtils.invokeValidator(validator, dto, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			return badRequest().body(error(fieldError(bindingResult)).getJson());
@@ -61,8 +65,14 @@ public class EmployeeController {
 
 		Employee employee = dto.to();
 
+		Department department = departmentService.findById(dto.getDepartment()).orElseThrow(NotFoundException::new);
+
+		employee.setDepartment(department);
+
+		employee.addAddress(dto.getAddresses());
+
 		service.save(employee);
-		return ok(success(EmployeeDto.from(employee)).getJson());
+		return ok(success(EmployeeResponse.from(employee)).getJson());
 	}
 
 	@PutMapping("/update")
@@ -72,6 +82,13 @@ public class EmployeeController {
 		Employee employee = service.findById(dto.getId()).orElseThrow(NotFoundException::new);
 
 		dto.update(employee);
+		
+		Department department = departmentService.findById(dto.getDepartment()).orElseThrow(NotFoundException::new);
+
+		employee.setDepartment(department);
+
+		employee.addAddress(dto.getAddresses());
+		
 		service.update(employee);
 		return ok(success(EmployeeDto.from(employee)).getJson());
 	}

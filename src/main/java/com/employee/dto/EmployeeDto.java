@@ -1,8 +1,12 @@
 package com.employee.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.employee.entity.Address;
+import com.employee.entity.Department;
 import com.employee.entity.Employee;
 
 import lombok.Data;
@@ -20,6 +24,10 @@ public class EmployeeDto {
 
 	@NotBlank
 	private String name;
+
+	private Long department;
+
+	private List<Address> addresses;
 
 	public Employee to() {
 
@@ -41,6 +49,7 @@ public class EmployeeDto {
 		dto.setId(employee.getId());
 		dto.setEmail(employee.getEmail());
 		dto.setName(employee.getName());
+		dto.setAddresses(employee.getAddresses());
 		return dto;
 	}
 

@@ -1,6 +1,7 @@
 package com.employee.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -41,10 +42,17 @@ public class Employee implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY)
 	private Department department;
 
-	@OneToMany(mappedBy = "employee",
+	@OneToMany(
 			cascade = CascadeType.ALL,
+			fetch = FetchType.EAGER,
 			orphanRemoval = true
 	)
 	List<Address> addresses;
+	
+	public void addAddress(List<Address> addressList) {
+		if(this.addresses == null) {
+			this.addresses = new ArrayList<Address>();
+		}
+		this.addresses.addAll(addressList);
+	}
 }
-
