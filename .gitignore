@@ -1,5 +1,67 @@
-# Ignore Gradle project-specific cache directory
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
 .gradle
 
-# Ignore Gradle build output directory
-build
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+bin/
+nbdist/
+out/
+.nb-gradle/
+
+
+### angular projects ###
+
+app/src/main/resources/static/assets/angularmodules/
+
+
+# compiled output
+app/web-apps/prescription/dist
+app/web-apps/prescription/tmp
+
+# dependencies
+app/web-apps/prescription/node_modules
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+app/web-apps/prescription/.sass-cache
+app/web-apps/prescription/connect.lock
+app/web-apps/prescription/coverage/*
+app/web-apps/prescription/libpeerconnection.log
+npm-debug.log
+testem.log
+app/web-apps/prescription/typings
+
+# e2e
+app/web-apps/prescription/e2e/*.js
+app/web-apps/prescription/e2e/*.map
+
+#System Files
+.DS_Store
+Thumbs.db
