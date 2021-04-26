@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.json.simple.JSONObject;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,7 +42,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 
+
 @RestController
+@EnableEurekaClient
 @RequiredArgsConstructor
 @Api(tags = "Employees's Data")
 public class EmployeeController {
@@ -52,6 +56,8 @@ public class EmployeeController {
 	private final EmployeeValidator validator;
 
 	private final DepartmentService departmentService;
+	
+	private final Environment env;
 
 	@PostMapping("/save")
 	@ApiOperation(value = "save employee", response = EmployeeDto.class)
@@ -110,7 +116,9 @@ public class EmployeeController {
 		helper.setPageSize(page, size);
 
 		Map<String, Object> response = new HashMap<>();
-
+		
+		response.put("port",  env.getProperty("local.server.port"));
+		
 		Map<String, Object> employeeMap = service.getAllEmployees(page, size);
 
 		List<Employee> employees = (List<Employee>) employeeMap.get("lists");

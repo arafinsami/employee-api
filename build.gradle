@@ -25,6 +25,12 @@ project(':employee-api') {
 }
 
 
+project(':eureka') {
+}
+
+project(':api-gateway') {
+}
+
 project(':service') {
     dependencies {
         compile project(':repository')

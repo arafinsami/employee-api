@@ -2,6 +2,8 @@
 rootProject.name = 'employee'
 
 include 'employee-api'
+include 'api-gateway'
+include 'eureka'
 include 'service'
 include 'repository'
 include 'domain'

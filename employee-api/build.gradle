@@ -2,6 +2,7 @@
 buildscript {
 	ext {
 		springBootVersion = '2.4.4'
+		set('springCloudVersion', "2020.0.2")
 	}
 	repositories {
 		mavenCentral()
@@ -29,11 +30,19 @@ dependencies {
 	
 	compile "io.springfox:springfox-boot-starter:3.0.0"
 	
+	compile 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }
 
