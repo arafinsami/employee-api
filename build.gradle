@@ -31,6 +31,9 @@ project(':eureka') {
 project(':api-gateway') {
 }
 
+project(':spring-cloud-gateway') {
+}
+
 project(':service') {
     dependencies {
         compile project(':repository')
