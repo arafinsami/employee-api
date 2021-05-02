@@ -20,8 +20,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.config.CacheNamespaceHandler;
 import org.springframework.stereotype.Service;
 
 import com.employee.dto.EmployeeDto;
@@ -55,6 +56,7 @@ public class EmployeeService {
 	 */
 
 	@Transactional
+	@CachePut(value = "employees", key = "#employee")
 	public Employee update(Employee employee) {
 		Employee e = repository.save(employee);
 		actionLogService.publishActivity(UPDATE, EMPLOYEE, e.getId(), EMPLOYEE_UPDATE_COMMENTS);
@@ -65,6 +67,7 @@ public class EmployeeService {
 	 * public void update(Employee employee) { em.merge(employee); }
 	 */
 
+	@Cacheable(value = "employees", key = "#id")
 	public Optional<Employee> findById(Long id) {
 		return repository.findById(id);
 	}
@@ -72,7 +75,7 @@ public class EmployeeService {
 	public List<EmployeeDto> findAll() {
 		return repository.getAll();
 	}
-	
+
 	public List<Employee> findAllEmployees() {
 		return repository.findAll();
 	}
@@ -107,6 +110,7 @@ public class EmployeeService {
 		repository.delete(employee);
 	}
 
+	@Cacheable(value = "employees", key = "{ #page, #size }")
 	public Map<String, Object> getAllEmployees(Integer page, Integer size) {
 
 		Map<String, Object> maps = new HashMap<>();
@@ -128,4 +132,3 @@ public class EmployeeService {
 		return maps;
 	}
 }
-

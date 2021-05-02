@@ -20,6 +20,7 @@ jar {
 
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
 	compile 'org.springframework.boot:spring-boot-starter-mail'
     compile 'org.projectlombok:lombok:1.18.18'

@@ -7,10 +7,10 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: employee
-        uri: lb://employee
+      - id: employee-api
+        uri: lb://employee-api
         predicates:
-        - Path=/employee/**   
+        - Path=/employee-api/**   
 
 info:
   app:

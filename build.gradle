@@ -33,6 +33,8 @@ project(':api-gateway') {
 
 project(':spring-cloud-gateway') {
 }
+project(':proxy-server') {
+}
 
 project(':service') {
     dependencies {

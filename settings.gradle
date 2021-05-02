@@ -3,6 +3,7 @@ rootProject.name = 'employee'
 
 include 'employee-api'
 include 'api-gateway'
+include 'proxy-server'
 include 'spring-cloud-gateway'
 include 'eureka'
 include 'service'
